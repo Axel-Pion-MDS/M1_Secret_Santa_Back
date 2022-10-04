@@ -1,3 +1,6 @@
 data/
 .idea/
 .env
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
