@@ -7,8 +7,6 @@ from django.views.decorators.csrf import csrf_exempt
 from .forms import MemberForm
 from .models import Member
 from .normalizers import members_normalizer, member_normalizer
-from promotions.models import Promotion
-from django.shortcuts import render
 
 
 # Create your views here.
