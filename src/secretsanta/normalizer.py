@@ -6,6 +6,7 @@ from users.normalizers import member_normalizer
 
 def santa_normalizer(data):
     return {
+        'id': data.id,
         'label': data.label,
         'description': data.description,
         'draw_date': data.draw_date,

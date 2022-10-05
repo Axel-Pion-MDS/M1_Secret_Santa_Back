@@ -73,7 +73,7 @@ def update_santa(request, santa_id):
         try:
             santa = Santa.objects.get(pk=santa_id)
         except Santa.DoesNotExist:
-            return JsonResponse({'code': 404, 'result': 'error', 'message': 'Member not found.', 'data': []})
+            return JsonResponse({'code': 404, 'result': 'error', 'message': 'Secret santa not found.', 'data': []})
 
         form = SantaForm(instance=santa, data=content)
 
