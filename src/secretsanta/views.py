@@ -28,6 +28,23 @@ def get_santas(request):
 
 
 @csrf_exempt
+def get_active_santas(request):
+
+    if request.method == "GET":
+        import datetime
+        current_date = datetime.datetime.now()
+        try:
+            query = Santa.objects.all().filter(draw_date__gt=current_date)
+            data = santas_normalizer(query)
+        except Santa.DoesNotExist:
+            return JsonResponse({'code': 404, 'result': 'error', 'message': 'Secret santa not found.'})
+    else:
+        return JsonResponse({'code': 403, 'result': 'forbidden', 'message': 'Must be a GET method', 'data': []})
+
+    return JsonResponse({'code': 200, 'result': 'success', 'data': data})
+
+
+@csrf_exempt
 def get_santa(request, santa_id):
     if request.method == "GET":
         try:

@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     # Santa
     path('', views.get_santas, name='get_santas'),
+    path('active', views.get_active_santas, name='get_active_santas'),
     path('<int:santa_id>', views.get_santa, name='get_santa'),
     path('add', views.add_santa, name='add_santa'),
     path('update/<int:santa_id>', views.update_santa, name='update_santa'),
