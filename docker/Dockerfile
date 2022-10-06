@@ -9,5 +9,6 @@ COPY requirements.txt /src/
 
 RUN pip install -r requirements.txt
 RUN pip install psycopg2
+RUN pip install django-cors-headers
 
 COPY . /src/
