@@ -29,7 +29,6 @@ def get_santas(request):
 
 @csrf_exempt
 def get_active_santas(request):
-
     if request.method == "GET":
         import datetime
         current_date = datetime.datetime.now()

@@ -5,7 +5,7 @@ from users.models import Member
 
 
 class Santa(models.Model):
-    label = models.CharField(max_length=255, unique=True)
+    label = models.CharField(max_length=255)
     description = models.TextField(max_length=500)
     draw_date = models.DateTimeField()
 

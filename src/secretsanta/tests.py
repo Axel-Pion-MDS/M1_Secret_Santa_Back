@@ -1,10 +1,9 @@
-# from django.test import TestCase
 from django.test import Client
-from unittest import TestCase
+from django.test import TestCase
 
 
 class SecretSantaTests(TestCase):
-
+    client = None
     # Base URL
     BASE_URL = '/santa/'
 
@@ -46,8 +45,8 @@ class SecretSantaTests(TestCase):
         "result": "success",
         "data": [
             {
-                "id": 2,
-                "label": "Test secret santa",
+                "id": 1,
+                "label": "Test secret santa - First",
                 "description": "This is a secret santa description",
                 "draw_date": "2022-10-10T00:00:00Z",
             }
@@ -59,8 +58,8 @@ class SecretSantaTests(TestCase):
         "code": 200,
         "result": "success",
         "data": {
-            "id": 2,
-            "label": "Test secret santa",
+            "id": 1,
+            "label": "Test secret santa - First",
             "description": "This is a secret santa description",
             "draw_date": "2022-10-10T00:00:00Z",
         },
@@ -71,7 +70,7 @@ class SecretSantaTests(TestCase):
         "code": 200,
         "result": "success",
         "data": {
-            "id": 2,
+            "id": 1,
             "label": "Update secret santa",
             "description": "This is an update in secret santa description",
             "draw_date": "2021-10-10T00:00:00Z",
@@ -84,45 +83,31 @@ class SecretSantaTests(TestCase):
         "result": "success",
         "data": []
     }
-    i = 0
 
     @classmethod
-    def setUpClass(cls):
+    def setUpTestData(cls):
         cls.client = Client()
         cls.client.post(
             cls.BASE_URL + 'add', cls.CREATE_SANTA_PAYLOAD, 'application/json')
-        print(cls.i)
-        cls.i += 1
 
     def test01_create_santa(self):
         response = self.client.post(
             self.BASE_URL + 'add', self.CREATE_OTHER_SANTA_PAYLOAD, 'application/json')
         self.assertEqual(response.json(), self.BODY_CREATE_SANTA)
-        print('Create')
 
     def test02_get_santa(self):
-        response = self.client.get(self.BASE_URL + '3')
+        response = self.client.get(self.BASE_URL + '1')
         self.assertEqual(response.json(), self.BODY_GET_SANTA)
-        print('Get single')
 
     def test03_get_santas(self):
         response = self.client.get(self.BASE_URL)
         self.assertEqual(response.json(), self.BODY_GET_SANTAS)
-        print('Get all')
 
     def test04_update_santa(self):
         response = self.client.patch(
-            self.BASE_URL + 'update/5', self.UPDATE_SANTA_PAYLOAD, 'application/json')
+            self.BASE_URL + 'update/1', self.UPDATE_SANTA_PAYLOAD, 'application/json')
         self.assertEqual(response.json(), self.BODY_UPDATE_SANTA)
-        print('Update')
 
     def test05_delete_santa(self):
-        response = self.client.delete(self.BASE_URL + 'delete/6')
+        response = self.client.delete(self.BASE_URL + 'delete/1')
         self.assertEqual(response.json(), self.BODY_DELETE_SANTA)
-        print('Delete')
-
-    def drop_table(self):
-        cursor = self.client.cursor()
-        table_name = self.model._meta.db_table
-        sql = "DROP TABLE %s;" % (table_name, )
-        cursor.execute(sql)

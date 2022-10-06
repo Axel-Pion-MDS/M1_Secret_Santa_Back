@@ -1,6 +1,3 @@
-import json
-
-from django.http import HttpRequest, HttpResponse
 from django.test import TestCase
 from django.test import Client
 

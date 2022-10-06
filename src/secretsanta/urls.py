@@ -11,7 +11,7 @@ urlpatterns = [
     path('update/<int:santa_id>', views.update_santa, name='update_santa'),
     path('delete/<int:santa_id>', views.delete_santa, name='delete_santa'),
     # Santa members
-    path('<int:santa_id>', views.get_santa_members,
+    path('<int:santa_id>/members', views.get_santa_members,
          name='get_santa_members'),
     path('<int:santa_id>/member/<int:member_id>', views.get_santa_member,
          name='get_santa_member'),
