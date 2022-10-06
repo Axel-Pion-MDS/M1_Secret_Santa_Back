@@ -59,7 +59,7 @@ class PromotionModelTests(TestCase):
         "data": []
     }
 
-    expected_404_on_label = {
+    expected_404_on_empty_add = {
         "code": 404,
         "result": "error",
         "message": "Could not save the data",
@@ -68,6 +68,12 @@ class PromotionModelTests(TestCase):
                 "This field is required."
             ]
         }
+    }
+
+    expected_404_on_promotion = {
+        "code": 404,
+        "result": "error",
+        "message": "Promotion not found."
     }
 
     @classmethod
@@ -96,27 +102,84 @@ class PromotionModelTests(TestCase):
         response = self.client.patch(path, self.update_payload, 'application/json')
         self.assertEqual(response.json(), self.expected_update_payload)
 
-    def test05_delete_promotion(self):
-        path = self.url + 'delete/1'
-
-        response = self.client.delete(path)
-        self.assertEqual(response.json(), self.expected_delete_payload)
-
-    def test_06_create_promotion_with_empty_array_on_label(self):
+    def test05_create_promotion_with_empty_array_on_label(self):
         path = self.url + 'add'
         payload = {
             'label': []
         }
 
         response = self.client.post(path, payload, 'application/json')
-        self.assertEqual(response.json(), self.expected_404_on_label)
+        self.assertEqual(response.json(), self.expected_404_on_empty_add)
 
-    def test_06_create_promotion_with_empty_object_on_label(self):
+    def test06_create_promotion_with_empty_object_on_label(self):
         path = self.url + 'add'
         payload = {
             'label': {}
         }
 
         response = self.client.post(path, payload, 'application/json')
-        self.assertEqual(response.json(), self.expected_404_on_label)
+        self.assertEqual(response.json(), self.expected_404_on_empty_add)
 
+    def test07_create_promotion_with_empty_payload(self):
+        path = self.url + 'add'
+        payload = {}
+
+        response = self.client.post(path, payload, 'application/json')
+        self.assertEqual(response.json(), self.expected_404_on_empty_add)
+
+    def test08_update_promotion_with_wrong_id(self):
+        path = self.url + 'update'
+        payload = {
+            'id': 666,
+            'label': 'Update unit test'
+        }
+
+        response = self.client.patch(path, payload, 'application/json')
+        self.assertEqual(response.json(), self.expected_404_on_promotion)
+
+    def test09_update_promotion_with_empty_array_on_label(self):
+        path = self.url + 'update'
+        payload = {
+            'id': 1,
+            'label': []
+        }
+
+        response = self.client.patch(path, payload, 'application/json')
+        self.assertEqual(response.json(), self.expected_404_on_empty_add)
+
+    def test10_update_promotion_with_empty_object_on_label(self):
+        path = self.url + 'update'
+        payload = {
+            'id': 1,
+            'label': {}
+        }
+
+        response = self.client.patch(path, payload, 'application/json')
+        self.assertEqual(response.json(), self.expected_404_on_empty_add)
+
+    def test11_update_promotion_without_label(self):
+        path = self.url + 'update'
+        payload = {
+            'id': 1,
+        }
+
+        response = self.client.patch(path, payload, 'application/json')
+        self.assertEqual(response.json(), self.expected_404_on_empty_add)
+
+    def test12_get_promotion_with_wrong_id(self):
+        path = self.url + '666'
+
+        response = self.client.get(path)
+        self.assertEqual(response.json(), self.expected_404_on_promotion)
+
+    def test13_delete_promotion(self):
+        path = self.url + 'delete/1'
+
+        response = self.client.delete(path)
+        self.assertEqual(response.json(), self.expected_delete_payload)
+
+    def test14_delete_promotion_with_wrong_id(self):
+        path = self.url + 'delete/666'
+
+        response = self.client.delete(path)
+        self.assertEqual(response.json(), self.expected_404_on_promotion)

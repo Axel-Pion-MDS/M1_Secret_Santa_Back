@@ -73,14 +73,14 @@ def update_role(request):
         try:
             role = Role.objects.get(pk=role_id)
         except Role.DoesNotExist:
-            return JsonResponse({'code': 404, 'result': 'error', 'message': 'Role not found.', 'data': []})
+            return JsonResponse({'code': 404, 'result': 'error', 'message': 'Role not found.'})
 
         form = RoleForm(instance=role, data=content)
 
         if form.is_valid():
             role.save()
         else:
-            return JsonResponse({'code': 404, 'result': 'error', 'message': 'Error in form.', 'data': form.errors})
+            return JsonResponse({'code': 404, 'result': 'error', 'message': 'Could not save the data', 'data': form.errors})
 
     else:
         return JsonResponse({'code': 403, 'result': 'forbidden', 'message': 'Must be a PATCH method', 'data': []})
@@ -96,7 +96,7 @@ def delete_role(request, role_id):
         try:
             role = Role.objects.get(pk=role_id)
         except Role.DoesNotExist:
-            return JsonResponse({'code': 404, 'result': 'error', 'message': 'Role not found.', 'data': []})
+            return JsonResponse({'code': 404, 'result': 'error', 'message': 'Role not found.'})
 
         role.delete()
     else:

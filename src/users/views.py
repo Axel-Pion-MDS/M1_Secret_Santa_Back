@@ -83,14 +83,14 @@ def update_member(request):
         try:
             member = Member.objects.get(pk=member_id)
         except Member.DoesNotExist:
-            return JsonResponse({'code': 404, 'result': 'error', 'message': 'Member not found.', 'data': []})
+            return JsonResponse({'code': 404, 'result': 'error', 'message': 'Member not found.'})
 
         form = MemberForm(instance=member, data=content)
 
         if form.is_valid():
             member.save()
         else:
-            return JsonResponse({'code': 404, 'result': 'error', 'message': 'Error in form.', 'data': form.errors})
+            return JsonResponse({'code': 404, 'result': 'error', 'message': 'Could not save the data', 'data': form.errors})
 
     else:
         return JsonResponse({'code': 403, 'result': 'forbidden', 'message': 'Must be a PATCH method', 'data': []})
@@ -106,7 +106,7 @@ def delete_member(request, member_id):
         try:
             member = Member.objects.get(pk=member_id)
         except Member.DoesNotExist:
-            return JsonResponse({'code': 404, 'result': 'error', 'message': 'Member not found.', 'data': []})
+            return JsonResponse({'code': 404, 'result': 'error', 'message': 'Member not found.'})
 
         member.delete()
     else:

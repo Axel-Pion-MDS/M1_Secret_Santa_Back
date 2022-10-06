@@ -46,14 +46,6 @@ def add_promotion(request):
         decode = request.body.decode('utf-8')
         content = json.loads(decode)
 
-        if not content or not content['label']:
-            return JsonResponse({
-                'code': 404,
-                'result': 'error',
-                'message': 'Cannot be empty',
-                'data': []
-            })
-
         form = PromotionForm(content)
 
         if form.is_valid():
@@ -79,25 +71,17 @@ def update_promotion(request):
         content = json.loads(decode)
         promotion_id = content['id']
 
-        if not content or not content['label']:
-            return JsonResponse({
-                'code': 404,
-                'result': 'error',
-                'message': 'Cannot be empty',
-                'data': []
-            })
-
         try:
             promotion = Promotion.objects.get(pk=promotion_id)
         except Promotion.DoesNotExist:
-            return JsonResponse({'code': 404, 'result': 'error', 'message': 'Promotion not found.', 'data': []})
+            return JsonResponse({'code': 404, 'result': 'error', 'message': 'Promotion not found.'})
 
         form = PromotionForm(instance=promotion, data=content)
 
         if form.is_valid():
             promotion.save()
         else:
-            return JsonResponse({'code': 404, 'result': 'error', 'message': 'Error in form.', 'data': form.errors})
+            return JsonResponse({'code': 404, 'result': 'error', 'message': 'Could not save the data', 'data': form.errors})
 
     else:
         return JsonResponse({'code': 403, 'result': 'forbidden', 'message': 'Must be a PATCH method', 'data': []})
@@ -113,7 +97,7 @@ def delete_promotion(request, promotion_id):
         try:
             promotion = Promotion.objects.get(pk=promotion_id)
         except Promotion.DoesNotExist:
-            return JsonResponse({'code': 404, 'result': 'error', 'message': 'Promotion not found.', 'data': []})
+            return JsonResponse({'code': 404, 'result': 'error', 'message': 'Promotion not found.'})
 
         promotion.delete()
     else:
