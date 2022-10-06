@@ -97,19 +97,19 @@ Use -d if you want to detach the container
 | delete promotion     | 0.0.0.0:8000 | /promotions/delete/<id_promotion> | DELETE |
 
 ### Santa
-| API                 | Url          | Route                                 | Method |
-|---------------------|--------------|---------------------------------------|--------|
-| get every santas    | 0.0.0.0:8000 | /santas/                              | GET    |
-| get santa           | 0.0.0.0:8000 | /santas/<id_santa>                    | GET    |
-| get active santa    | 0.0.0.0:8000 | /santas/active                        | GET    |
-| add santa           | 0.0.0.0:8000 | /santas/add                           | POST   |
-| update santa        | 0.0.0.0:8000 | /santas/update/<id_santa>             | PATCH  |
-| delete santa        | 0.0.0.0:8000 | /santas/delete/<id_santa>             | DELETE |
-| get santa members   | 0.0.0.0:8000 | /santas/<id_santa>/members            | GET    |
-| get santa member    | 0.0.0.0:8000 | /santas/<id_santa>/member/<id_member> | GET    |
-| add santa member    | 0.0.0.0:8000 | /santas/<id_santa>/add                | POST   |
-| update santa member | 0.0.0.0:8000 | /santas/<id_santa>/update/<id_member> | PATCH  |
-| delete santa member | 0.0.0.0:8000 | /santas/<id_santa>/delete/<id_member> | DELETE |
+| API                 | Url          | Route                                | Method |
+|---------------------|--------------|--------------------------------------|--------|
+| get every santas    | 0.0.0.0:8000 | /santa/                              | GET    |
+| get santa           | 0.0.0.0:8000 | /santa/<id_santa>                    | GET    |
+| get active santa    | 0.0.0.0:8000 | /santa/active                        | GET    |
+| add santa           | 0.0.0.0:8000 | /santa/add                           | POST   |
+| update santa        | 0.0.0.0:8000 | /santa/update/<id_santa>             | PATCH  |
+| delete santa        | 0.0.0.0:8000 | /santa/delete/<id_santa>             | DELETE |
+| get santa members   | 0.0.0.0:8000 | /santa/<id_santa>/members            | GET    |
+| get santa member    | 0.0.0.0:8000 | /santa/<id_santa>/member/<id_member> | GET    |
+| add santa member    | 0.0.0.0:8000 | /santa/<id_santa>/add                | POST   |
+| update santa member | 0.0.0.0:8000 | /santa/<id_santa>/update/<id_member> | PATCH  |
+| delete santa member | 0.0.0.0:8000 | /santa/<id_santa>/delete/<id_member> | DELETE |
 
 ## Authors
 
