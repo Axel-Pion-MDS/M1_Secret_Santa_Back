@@ -10,7 +10,6 @@ from .normalizers import members_normalizer, member_normalizer
 from secretsanta.models import Santa, SantaMember
 
 
-
 # Create your views here.
 @csrf_exempt
 def get_members(request):

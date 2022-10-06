@@ -10,7 +10,8 @@ class MemberModelTests(TestCase):
         'firstname': "Add",
         'lastname': "UnitTest",
         'email': "add.unittest@gmail.com",
-        'promo': 1
+        'promo': 1,
+        'santa': 1
     }
 
     update_payload = {
