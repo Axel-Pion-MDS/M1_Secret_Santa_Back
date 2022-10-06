@@ -59,6 +59,17 @@ class PromotionModelTests(TestCase):
         "data": []
     }
 
+    expected_404_on_label = {
+        "code": 404,
+        "result": "error",
+        "message": "Could not save the data",
+        "data": {
+            "label": [
+                "This field is required."
+            ]
+        }
+    }
+
     @classmethod
     def setUpTestData(cls):
         cls.client = Client()
@@ -90,3 +101,22 @@ class PromotionModelTests(TestCase):
 
         response = self.client.delete(path)
         self.assertEqual(response.json(), self.expected_delete_payload)
+
+    def test_06_create_promotion_with_empty_array_on_label(self):
+        path = self.url + 'add'
+        payload = {
+            'label': []
+        }
+
+        response = self.client.post(path, payload, 'application/json')
+        self.assertEqual(response.json(), self.expected_404_on_label)
+
+    def test_06_create_promotion_with_empty_object_on_label(self):
+        path = self.url + 'add'
+        payload = {
+            'label': {}
+        }
+
+        response = self.client.post(path, payload, 'application/json')
+        self.assertEqual(response.json(), self.expected_404_on_label)
+

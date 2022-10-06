@@ -23,6 +23,8 @@ class SantaMember(models.Model):
         Member,
         on_delete=models.CASCADE,
         related_name='target_id',
+        blank=True,
+        null=True
     )
     santa = models.ForeignKey(
         Santa,
@@ -30,4 +32,20 @@ class SantaMember(models.Model):
     )
 
     def __str__(self):
-        return '{} - {} {} > {} {}'.format(self.pk, self.member.firstname, self.member.lastname, self.target.firstname, self.member.lastname)
+        if self.target is not None:
+            return '{} - Santa: {}, Member: {} {} > Target: {} {}'.format(
+                self.pk,
+                self.santa,
+                self.member.firstname,
+                self.member.lastname,
+                self.target.firstname,
+                self.target.lastname
+            )
+
+        return '{} - Santa: {}, Member: {} {} > Target: {}'.format(
+            self.pk,
+            self.santa,
+            self.member.firstname,
+            self.member.lastname,
+            self.target
+        )

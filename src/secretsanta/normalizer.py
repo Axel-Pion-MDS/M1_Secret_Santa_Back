@@ -33,12 +33,12 @@ def santa_members_normalizer(data):
     members = []
 
     for member in data:
-        member_data = Member.objects.get(pk=member.member_id)
-        target_data = Member.objects.get(pk=member.target_id)
+        member_data = Member.objects.get(pk=member.member_id) if member.member_id is not None else None
+        target_data = Member.objects.get(pk=member.target_id) if member.target_id is not None else None
 
         item = {
-            'member': member_normalizer(member_data),
-            'target': member_normalizer(target_data),
+            'member': member_normalizer(member_data) if member.member_id is not None else None,
+            'target': member_normalizer(target_data) if target_data is not None else None,
         }
 
         members.append(item)
@@ -51,11 +51,11 @@ def santa_members_normalizer(data):
 
 def santa_member_normalizer(data):
     santa = Santa.objects.get(pk=data.santa_id)
-    member = Member.objects.get(pk=data.member_id)
-    target = Member.objects.get(pk=data.target_id)
+    member = Member.objects.get(pk=data.member_id) if data.member_id is not None else None
+    target = Member.objects.get(pk=data.target_id) if data.target_id is not None else None
 
     return {
         'santa': santa_normalizer(santa),
-        'member': member_normalizer(member),
-        'target': member_normalizer(target),
+        'member': member_normalizer(member) if member is not None else None,
+        'target': member_normalizer(target) if target is not None else None,
     }

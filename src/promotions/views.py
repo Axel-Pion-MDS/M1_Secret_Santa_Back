@@ -45,6 +45,15 @@ def add_promotion(request):
     if request.method == "POST":
         decode = request.body.decode('utf-8')
         content = json.loads(decode)
+
+        if not content or not content['label']:
+            return JsonResponse({
+                'code': 404,
+                'result': 'error',
+                'message': 'Cannot be empty',
+                'data': []
+            })
+
         form = PromotionForm(content)
 
         if form.is_valid():
@@ -69,6 +78,14 @@ def update_promotion(request):
         decode = request.body.decode('utf-8')
         content = json.loads(decode)
         promotion_id = content['id']
+
+        if not content or not content['label']:
+            return JsonResponse({
+                'code': 404,
+                'result': 'error',
+                'message': 'Cannot be empty',
+                'data': []
+            })
 
         try:
             promotion = Promotion.objects.get(pk=promotion_id)

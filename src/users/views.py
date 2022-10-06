@@ -7,6 +7,8 @@ from django.views.decorators.csrf import csrf_exempt
 from .forms import MemberForm
 from .models import Member
 from .normalizers import members_normalizer, member_normalizer
+from secretsanta.models import Santa, SantaMember
+
 
 
 # Create your views here.
@@ -50,6 +52,15 @@ def add_member(request):
         if form.is_valid():
             form.save()
             data = member_normalizer(Member.objects.latest('id'))
+
+            if content['santa']:
+                try:
+                    santa = Santa.objects.get(pk=content['santa'])
+                except Santa.DoesNotExist:
+                    return JsonResponse({'code': 404, 'result': 'error', 'message': 'Santa not found.'})
+
+                santaMember = SantaMember(member=Member.objects.latest('id'), santa=santa)
+                SantaMember.save(santaMember)
         else:
             return JsonResponse({
                 'code': 404,
